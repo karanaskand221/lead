@@ -203,7 +203,7 @@
        
     // Load Mentors
     const mentorDropdown = document.getElementById('mentor_dropdown');
-    const mentorsList = JSON.parse(localStorage.getItem('mentors_list') || '["Karan Sir", "Team Lead", "HR Manager"]');
+    const mentorsList = JSON.parse(localStorage.getItem('mentors_list') || '["HR Manager"]');
     mentorsList.forEach(mentor => {
         const option = document.createElement('option');
         option.value = mentor;
@@ -244,10 +244,6 @@
             if (resumeFile) {
                 payload.append('resumeData', await fileToBase64(resumeFile));
                 payload.append('resumeName', resumeFile.name);
-            }
-            if (aadharFile) {
-                payload.append('aadharData', await fileToBase64(aadharFile));
-                payload.append('aadharName', aadharFile.name);
             }
 
             payload.append('timestamp', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
