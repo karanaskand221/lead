@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Opportunity In Nashik | Join Karan SIR</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root { 
+            --primary: #00b894; 
+            --dark: #2d3436; 
+            --accent: #00d4ff; 
+            --white: #ffffff; 
+            --danger: #141212; 
+        }
+        * { box-sizing: border-box; scroll-behavior: smooth; }
+        body { 
+            font-family: 'Poppins', sans-serif; 
+            margin: 0; 
+            background-color: #f9f9f9; 
+            color: var(--dark); 
+            line-height: 1.6; 
+            overflow-x: hidden; 
+        }
+
+        /* Content */
+        .scarcity-bar { 
+            background: #fff3cd; 
+            color: #856404; 
+            text-align: center; 
+            padding: 10px; 
+            font-weight: bold; 
+            border-bottom: 2px solid #fdcb6e; 
+            position: sticky; 
+            top: 0; 
+            z-index: 1001; 
+            font-size: 0.9rem; 
+        }
+        .hero { 
+            background: linear-gradient(135deg, rgba(0, 184, 148, 0.9), rgba(45, 52, 54, 0.9)), 
+                        url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=1350&q=80'); 
+            background-size: cover; 
+            background-position: center; 
+            color: var(--white); 
+            padding: 80px 20px 120px; 
+            text-align: center; 
+        }
+        .hero h1 { 
+            font-size: clamp(2rem, 5vw, 3rem); 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+        }
+        .slot-tracker { 
+            background: white; 
+            color: var(--dark); 
+            padding: 20px; 
+            border-radius: 10px; 
+            display: inline-block; 
+            margin-top: 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2); 
+        }
+        .progress-container { 
+            width: min(250px, 90vw); 
+            background: #eee; 
+            height: 12px; 
+            border-radius: 10px; 
+            margin: 10px auto; 
+            overflow: hidden; 
+        }
+        .progress-fill { 
+            width: 90%; 
+            background: var(--danger); 
+            height: 100%; 
+            transition: width 0.8s ease-in-out; 
+            animation: pulse 2s infinite; 
+        }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
+        .urgent-text { 
+            color: var(--danger); 
+            font-weight: 800; 
+            font-size: 1.2rem; 
+        }
+        .btn-container { 
+            display: flex; 
+            justify-content: center; 
+            gap: 15px; 
+            flex-wrap: wrap; 
+            margin-top: 30px; 
+        }
+        .btn { 
+            padding: 15px 35px; 
+            border-radius: 50px; 
+            text-decoration: none; 
+            font-weight: bold; 
+            transition: 0.3s; 
+            cursor: pointer; 
+            border: none; 
+            display: inline-block; 
+        }
+        .btn-main { 
+            background: #fdcb6e; 
+            color: var(--dark); 
+        }
+        .btn:hover { 
+            transform: translateY(-3px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2); 
+        }
+        .roadmap { 
+            text-align: center; 
+            padding: 80px 20px; 
+            background: white; 
+        }
+        .roadmap-img { 
+            width: 100%; 
+            max-width: 700px; 
+            border-radius: 15px; 
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1); 
+            margin: 30px auto; 
+            display: block; 
+        }
+        .steps { 
+            display: flex; 
+            justify-content: space-around; 
+            flex-wrap: wrap; 
+            max-width: 1000px; 
+            margin: 40px auto; 
+            gap: 20px;
+        }
+        .step { 
+            flex: 1; 
+            min-width: 200px; 
+            padding: 20px; 
+        }
+        .step-num { 
+            background: var(--primary); 
+            color: white; 
+            width: 45px; 
+            height: 45px; 
+            border-radius: 50%; 
+            display: inline-block; 
+            line-height: 45px; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+            font-size: 1.2rem; 
+        }
+        .stats-section { 
+            display: flex; 
+            justify-content: center; 
+            gap: 40px; 
+            padding: 60px 20px; 
+            background: #fff; 
+            flex-wrap: wrap; 
+        }
+        .stats-section div { 
+            text-align: center; 
+            flex: 1; 
+            min-width: 120px; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            padding: 10px; 
+        }
+        .stats-section div:hover { transform: scale(1.05); }
+        .stats-section h3 { margin: 0; color: var(--primary); font-size: 2rem; }
+        .stats-section small { opacity: 0.8; display: block; }
+        .why-section { 
+            padding: 60px 20px; 
+            max-width: 1100px; 
+            margin: auto; 
+            text-align: center; 
+        }
+        .why-section h2 { margin-bottom: 40px; }
+        .features-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+            gap: 20px; 
+        }
+        .feature-card { 
+            padding: 30px; 
+            background: white; 
+            border-radius: 10px; 
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05); 
+            transition: 0.3s; 
+            cursor: pointer; 
+        }
+        .feature-card:hover { transform: translateY(-5px); }
+        .feature-icon { 
+            font-size: 2rem; 
+            margin-bottom: 10px; 
+        }
+        .feature-card h4 { margin: 0 0 15px; }
+        footer { 
+            text-align: center; 
+            padding: 40px; 
+            background: var(--dark); 
+            color: white; 
+        }
+
+        /* PERFECT MOBILE RESPONSIVE */
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2rem; }
+            .hero { padding: 60px 15px 100px; }
+            .btn-container { flex-direction: column; align-items: center; }
+            .btn { width: 100%; max-width: 280px; }
+            .stats-section { gap: 20px; padding: 40px 15px; }
+            .steps { flex-direction: column; align-items: center; }
+            .step { max-width: 300px; }
+        }
+        @media (max-width: 480px) {
+            .scarcity-bar { font-size: 0.85rem; padding: 12px 15px; }
+            .stats-section h3 { font-size: 1.5rem; }
+            .stats-section { gap: 15px; }
+        }
+    </style>
+</head>
+<body>
+    <!-- CONTENT - NO LOGIN/SIDEBAR -->
+    <div class="scarcity-bar" id="scarcity-text">⚠️ UPDATE: 90 Mentorship slots are already filled this week!</div>
+    
+    <section class="hero">
+        <h1>Own Your Golden Opportunity in Nashik</h1>
+        <p>Join Leader Skilled Program and build a 100% legal income.</p>
+        <div class="slot-tracker">
+            <div class="urgent-text" id="slots-remaining">ONLY 10 SLOTS REMAINING!</div>
+            <div class="progress-container"><div class="progress-fill" id="progress-bar"></div></div>
+            <small id="slot-count-text">90/100 Applicants already selected</small>
+        </div>
+        <div class="btn-container">
+            <a href="work-application.html" class="btn btn-main">
+                <i class="fas fa-calendar-check"></i> Book Appointment
+            </a>
+        </div>
+    </section>
+
+    <section class="stats-section">
+        <div>
+            <h3>500+</h3>
+            <small>Students Mentored</small>
+        </div>
+        <div><h3>₹10L+</h3><small>Community Earnings</small></div>
+        <div><h3>100%</h3><small>Legal & Verified</small></div>
+    </section>
+
+    <section class="roadmap">
+        <h2>This is your step by step towards opportunity.</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">1</div>
+                <h3>Apply</h3>
+                <p>Submit your details online.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">2</div>
+                <h3>Meet</h3>
+                <p>Claim your direct interview opportunity.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">3</div>
+                <h3>Learn</h3>
+                <p>Get our income systems.</p>
+            </div>
+            <div class="step">
+                <div class="step-num">4</div>
+                <h3>Earn</h3>
+                <p>Start your financial journey.</p>
+            </div>
+        </div>
+        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&w=800&q=80" alt="Growth Roadmap" class="roadmap-img">
+    </section>
+
+    <section class="why-section">
+        <h2>Why Choose This Opportunity?</h2>
+        <div class="features-grid">
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h4>Flexible Hours</h4>
+                <p>Work only 2-3 hours a day around your college or job schedule.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">👨‍🏫</div>
+                <h4>Personal Coaching</h4>
+                <p>Direct access to Leader for weekly strategy to Learn.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h4>Zero Risk</h4>
+                <p>100% legal Opportunity model based on professional systems.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>&copy; 2026 Business/Work Opportunity | Nashik | <strong>Leader Skilled Program</strong></footer>
+
+    <script>
+        // Scarcity bar animation (kept for visual effect)
+        const sequence = [90, 91, 93, 95, 97, 99, 99, 99, 99];
+        let visitCount = localStorage.getItem('karan_site_visits');
+        if (visitCount === null) visitCount = 0; else visitCount = (parseInt(visitCount) + 1) % 9;
+        localStorage.setItem('karan_site_visits', visitCount);
+        const currentNumber = sequence[visitCount];
+        const remaining = 100 - currentNumber;
+        document.getElementById('scarcity-text').innerText = `⚠️ UPDATE: ${currentNumber} Mentorship slots are already filled this week!`;
+        document.getElementById('slots-remaining').innerText = `ONLY ${remaining} SLOTS REMAINING!`;
+        document.getElementById('slot-count-text').innerText = `${currentNumber}/100 Applicants already selected`;
+        document.getElementById('progress-bar').style.width = currentNumber + '%';
+    </script>
+</body>
+</html>
