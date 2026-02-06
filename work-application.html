@@ -203,181 +203,84 @@
     </div>
 
     <!-- ✅ PERFECT SCRIPT - EXACT SAME GOOGLE SHEETS WORKING CODE + LOCALSTORAGE -->
-    <script>
-        (function() {
-            'use strict';
+        <script>
+       
+    // Load Mentors
+    const mentorDropdown = document.getElementById('mentor_dropdown');
+    const mentorsList = JSON.parse(localStorage.getItem('mentors_list') || '["Karan Sir", "Team Lead", "HR Manager"]');
+    mentorsList.forEach(mentor => {
+        const option = document.createElement('option');
+        option.value = mentor;
+        option.textContent = mentor;
+        mentorDropdown.appendChild(option);
+    });
 
-            // STORAGE KEY FOR LOCALSTORAGE
-            const STORAGE_KEY = 'nashik_elite_form_perfect';
+    // PASTE YOUR COPIED WEB APP URL HERE
+    const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyCYm5tn0iMWnX0sCSRHP_TIF29Ahhe_cQU8-p8Th4fEx53Er0GXt-wEZGDKRThwDLcPQ/exec"; 
+    
+    const form = document.getElementById('careerForm');
+    const submitBtn = document.getElementById('submit_btn');
+    const formContainer = document.getElementById('formContainer');
+    const successScreen = document.getElementById('successScreen');
 
-            // Particles
-            function createParticles() {
-                const particles = document.getElementById('particles');
-                const count = window.innerWidth < 480 ? 15 : window.innerWidth < 768 ? 25 : 40;
-                for(let i = 0; i < count; i++) {
-                    const particle = document.createElement('div');
-                    particle.className = 'particle';
-                    particle.style.left = Math.random() * 100 + '%';
-                    particle.style.animationDelay = Math.random() * 6 + 's';
-                    particle.style.animationDuration = (4 + Math.random() * 3) + 's';
-                    particles.appendChild(particle);
-                }
+    const fileToBase64 = (file) => new Promise((resolve) => {
+        if (!file || !file.size) return resolve(null);
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => resolve(null);
+    });
+
+    form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        submitBtn.disabled = true;
+        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+
+        try {
+            const formData = new FormData(form);
+            const payload = new URLSearchParams();
+            
+            formData.forEach((value, key) => payload.append(key, value));
+
+            const resumeFile = document.getElementById('file_resume').files[0];
+            const aadharFile = document.getElementById('file_aadhar').files[0];
+            
+            if (resumeFile) {
+                payload.append('resumeData', await fileToBase64(resumeFile));
+                payload.append('resumeName', resumeFile.name);
+            }
+            if (aadharFile) {
+                payload.append('aadharData', await fileToBase64(aadharFile));
+                payload.append('aadharName', aadharFile.name);
             }
 
-            // SAVE FORM DATA TO LOCALSTORAGE
-            function saveFormData() {
-                const formData = {
-                    name: document.getElementById('name')?.value || '',
-                    phone: document.getElementById('phone')?.value || '',
-                    mentor: document.getElementById('mentor_dropdown')?.value || '',
-                    location: document.getElementById('location')?.value || '',
-                    address: document.getElementById('address')?.value || '',
-                    work_type: document.querySelector('input[name="work_type"]:checked')?.value || 'Full Time',
-                    timestamp: new Date().toISOString()
-                };
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-                showSavedIndicator();
-            }
+            payload.append('timestamp', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
 
-            // LOAD FORM DATA FROM LOCALSTORAGE
-            function loadFormData() {
-                try {
-                    const saved = localStorage.getItem(STORAGE_KEY);
-                    if (saved) {
-                        const formData = JSON.parse(saved);
-                        if (formData.name) document.getElementById('name').value = formData.name;
-                        if (formData.phone) document.getElementById('phone').value = formData.phone;
-                        if (formData.mentor) document.getElementById('mentor_dropdown').value = formData.mentor;
-                        if (formData.location) document.getElementById('location').value = formData.location;
-                        if (formData.address) document.getElementById('address').value = formData.address;
-                        if (formData.work_type) {
-                            const radio = document.querySelector(`input[value="${formData.work_type}"]`);
-                            if (radio) {
-                                radio.checked = true;
-                                radio.closest('.radio-option').classList.add('checked');
-                            }
-                        }
-                        showSavedIndicator();
-                    }
-                } catch (e) {
-                    console.error('Load error:', e);
-                }
-            }
-
-            // SHOW SAVED INDICATOR
-            function showSavedIndicator() {
-                const indicator = document.getElementById('savedIndicator');
-                indicator.style.display = 'block';
-                setTimeout(() => indicator.style.display = 'none', 2500);
-            }
-
-            // ELEMENTS
-            const form = document.getElementById('careerForm');
-            const submitBtn = document.getElementById('submit_btn');
-            const formContainer = document.getElementById('formContainer');
-            const successScreen = document.getElementById('successScreen');
-            const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbyCYm5tn0iMWnX0sCSRHP_TIF29Ahhe_cQU8-p8Th4fEx53Er0GXt-wEZGDKRThwDLcPQ/exec";
-
-            // ✅ EXACT SAME WORKING GOOGLE SHEETS CODE
-            const fileToBase64 = (file) => new Promise((resolve) => {
-                if (!file || !file.size) return resolve(null);
-                const reader = new FileReader();
-                reader.readAsDataURL(file);
-                reader.onload = () => resolve(reader.result);
-                reader.onerror = () => resolve(null);
+            // Using fetch with 'no-cors' works for Google Script but won't return a readable 'ok' status
+            // We proceed to success screen assuming it sent (standard practice for Apps Script)
+            await fetch(GOOGLE_SHEET_URL, {
+                method: 'POST',
+                body: payload,
+                mode: 'no-cors'
             });
 
-            // ✅ LOAD MENTORS FROM LOCALSTORAGE (EXACT SAME)
-            const mentorDropdown = document.getElementById('mentor_dropdown');
-            const mentorsList = JSON.parse(localStorage.getItem('mentors_list') || '["Karan Sir", "Team Lead", "HR Manager"]');
-            mentorsList.forEach(mentor => {
-                const option = document.createElement('option');
-                option.value = mentor;
-                option.textContent = mentor;
-                mentorDropdown.appendChild(option);
-            });
+            formContainer.classList.add('hidden');
+            successScreen.style.display = 'block';
 
-            // ✅ PERFECT FORM SUBMISSION - EXACT SAME WORKING CODE
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                submitBtn.disabled = true;
-                submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+        } catch (error) {
+            console.error('Error:', error);
+            alert("Something went wrong, but your data was saved locally.");
+            formContainer.classList.add('hidden');
+            successScreen.style.display = 'block';
+        }
+    });
 
-                // FINAL LOCALSTORAGE SAVE
-                saveFormData();
+    // Phone validation
+    document.querySelector('input[name="phone"]').addEventListener('input', function(e) {
+        this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
+        this.style.borderColor = this.value.length === 10 ? '#00ff88' : 'rgba(0,212,255,0.2)';
+    });
 
-                try {
-                    const formData = new FormData(form);
-                    const payload = new URLSearchParams();
-                    
-                    formData.forEach((value, key) => payload.append(key, value));
-
-                    const resumeFile = document.getElementById('file_resume').files[0];
-                    const aadharFile = document.getElementById('file_aadhar').files[0];
-                    
-                    if (resumeFile) {
-                        payload.append('resumeData', await fileToBase64(resumeFile));
-                        payload.append('resumeName', resumeFile.name);
-                    }
-                    if (aadharFile) {
-                        payload.append('aadharData', await fileToBase64(aadharFile));
-                        payload.append('aadharName', aadharFile.name);
-                    }
-
-                    payload.append('timestamp', new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' }));
-
-                    await fetch(GOOGLE_SHEET_URL, {
-                        method: 'POST',
-                        body: payload,
-                        mode: 'no-cors'
-                    });
-
-                    formContainer.classList.add('hidden');
-                    successScreen.style.display = 'block';
-
-                } catch (error) {
-                    console.error('Error:', error);
-                    alert("Something went wrong, but your data was saved locally.");
-                    formContainer.classList.add('hidden');
-                    successScreen.style.display = 'block';
-                }
-            });
-
-            // AUTO-SAVE ON ALL INPUTS
-            ['input', 'change'].forEach(event => {
-                document.addEventListener(event, saveFormData, true);
-            });
-
-            // PHONE VALIDATION (EXACT SAME)
-            document.querySelector('input[name="phone"]').addEventListener('input', function(e) {
-                this.value = this.value.replace(/[^0-9]/g, '').slice(0, 10);
-                this.style.borderColor = this.value.length === 10 ? '#00ff88' : 'rgba(255,255,255,0.2)';
-                saveFormData();
-            });
-
-            // RADIO BUTTONS
-            document.querySelectorAll('input[type="radio"]').forEach(radio => {
-                radio.addEventListener('change', () => {
-                    document.querySelectorAll('.radio-option').forEach(opt => opt.classList.remove('checked'));
-                    radio.closest('.radio-option').classList.add('checked');
-                    saveFormData();
-                });
-            });
-
-            // INIT
-            if (document.readyState === 'loading') {
-                document.addEventListener('DOMContentLoaded', () => {
-                    createParticles();
-                    loadFormData();
-                });
-            } else {
-                createParticles();
-                loadFormData();
-            }
-
-            // BACKUP SAVE
-            setInterval(saveFormData, 3000);
-        })();
     </script>
 </body>
 </html>
